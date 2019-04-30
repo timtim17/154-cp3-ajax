@@ -20,6 +20,8 @@
     const GAME_TIME_STEP = GAME_TIME_INTERVAL / 1000;
     const HIDDEN_CLASS = "hidden";
     const DISPLAY_NONE_CLASS = "hidden-none";
+    const REGEX_QUOTE = new RegExp("‘|’|“|”", "g");
+    const REGEX_DASH = new RegExp("—|–", "g");
 
     let allHeadlines = undefined;
     let picked = undefined; // headlines picked for the current game
@@ -70,7 +72,10 @@
      * @param {object} data - The parsed JSON data from the News API
      */
     function prepHeadlines(data) {
-        allHeadlines = data.map(article => article.title);
+        // replace special quotes while mapping headlines
+        allHeadlines = data.map(article => article.title
+            .replace(REGEX_QUOTE, "\"")
+            .replace(REGEX_DASH, "-"));
         let list = qs("#done ul");
         data.forEach(article => {
             let listItem = document.createElement("li");
