@@ -31,7 +31,7 @@ header, main, .hidden {
 
 section {
     margin: 0 auto;
-    width: 80vw;
+    width: 70vw;
 }
 
 header h2 {
@@ -71,6 +71,7 @@ a, footer {
 ul {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     list-style: none;
     margin-bottom: 150px;   /* room for footer */
 }
@@ -108,10 +109,35 @@ body.anim-load footer {
     bottom: 0;
 }
 
+body.anim-load .decor-fire {
+    bottom: -10px;
+}
+
 .hidden-none {
     display: none;
 }
 
 #prompt span {
     font-weight: bold;
+}
+
+.decor-fire {
+    position: fixed;
+    transition: bottom 1s 1s ease-out;
+    bottom: -1000px;
+    width: 300px;
+}
+
+.decor-fire:first-of-type {
+    left: -10px;
+}
+
+.decor-fire:last-of-type {
+    right: -20px;
+}
+
+@media (max-width: 1650px) {
+    .decor-fire {
+        display: none;
+    }
 }
