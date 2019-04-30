@@ -25,18 +25,17 @@
             <button type="button" id="btn-start" disabled>Start</button>
 
             <section class="hidden hidden-none" id="game">
+                <p>Time: <span id="time"><!-- populated by js --></span></p>
                 <input type="text" id="in-typer">
-                <div id="in-prompt">
-                    <span id="chars-typed"><!-- populated by js --></span>
-                </div>
+                <div id="prompt"><!-- populated by js --></div>
             </section>
 
             <section class="hidden hidden-none" id="done">
                 <h2>Congrats! You finished!</h2>
-                <p>Your time was: <span id="time"><!-- populated by js --></span></p>
+                <p>Your time was: <span id="done-time"><!-- populated by js --></span></p>
+                <p>Click the start button to play again!</p>
                 <p>If you'd like to read those articles, here are some links:</p>
                 <ul id="article-links"><!-- populated by js --></ul>
-                <p>Or, click the start button to play again!</p>
             </section>
         </main>
 

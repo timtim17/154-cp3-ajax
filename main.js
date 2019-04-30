@@ -4,7 +4,7 @@
  * @date 04/29/2019
  * Javascript for HeadlineTyper. Triggers CSS animation once the page is loaded using a class, uses
  * AJAX to fetch headlines from the News API. Times the user once they start the game and finds a
- * result of the user's accuracy and speed.
+ * result of the user's speed.
  */
 (function() {
     "use strict";
@@ -15,7 +15,7 @@
      * The country to fetch news for. Can be any country code supported by the News API.
      */
     const API_NEWS_COUNTRY = "us";
-    const GAME_HEADLINES = 10;
+    const GAME_HEADLINES = 5;
     const GAME_TIME_INTERVAL = 100; // update the timer every x ms
     const GAME_TIME_STEP = GAME_TIME_INTERVAL / 1000;
     const HIDDEN_CLASS = "hidden";
@@ -36,7 +36,9 @@
     function onPageLoad() {
         document.body.classList.add("anim-load");
         id("btn-start").addEventListener("click", onGameStart);
-        id("typer").addEventListener("update", onInputUpdate);
+        let input = id("in-typer");
+        input.addEventListener("input", onInputUpdate);
+        input.addEventListener("paste", onInputPaste);
         fetchHeadlineData();
     }
 
@@ -75,6 +77,7 @@
             let link = document.createElement("a");
             link.href = article.url;
             link.textContent = article.title;
+            link.target = "_blank";
             listItem.appendChild(link);
             list.appendChild(listItem);
         });
@@ -89,6 +92,7 @@
      */
     function onGameStart() {
         hideElement("btn-start");
+        hideElement("done");
         picked = [];
         while (picked.length < GAME_HEADLINES) {
             let pick = allHeadlines[Math.floor(Math.random() * allHeadlines.length)];
@@ -103,45 +107,75 @@
         setTimeout(() => {
             timer = setInterval(updateTimer, GAME_TIME_INTERVAL);
             showElement("game");
-            id("game").focus(); // put focus on the input so the user can start typing
+            id("in-typer").focus(); // put focus on the input so the user can start typing
         }, 1000);
     }
 
     /**
-     * 
+     * Picks the next headline from the pick list and updates the page respectively. If there are
+     * no more headlines, triggers the game over event.
      */
     function nextHeadline() {
         if (picked.length === 0) {
             onGameOver();
         } else {
             curLine = picked.pop();
-            id("in-prompt").innerHTML = "";
+            curLine = curLine.substring(0, curLine.lastIndexOf(" - "));
+            id("prompt").textContent = curLine;
+            id("in-typer").value = "";
         }
     }
 
     /**
-     * 
+     * Runs every time something is typed in the text box. Checks how much of what the user has
+     * typed matches the actual line, and updates the line displayed on the DOM, with what hs been
+     * typed in bold. If the line is complete, trigger the next line.
      */
     function onInputUpdate() {
-        let parent = id("in-prompt");
+        let parent = id("prompt");
         parent.innerHTML = "";
         let typed = id("in-typer").value;
         let i = 0;
         while (i < Math.max(typed.length, curLine.length) && typed[i] === curLine[i]) {
             i++;
         }
-        id("chars-typed").textContent = curLine.substring(0, i);
-        id("in-prompt").append(document.createTextNode(curLine.substring(i)));
+        if (i === curLine.length) {
+            nextHeadline();
+        } else {
+            let typedEle = document.createElement("span");
+            typedEle.textContent = curLine.substring(0, i);
+            parent.appendChild(typedEle);
+            parent.append(document.createTextNode(curLine.substring(i)));
+        }
     }
 
     /**
-     * 
+     * On a paste event, disable the input for 2 seconds with a warning against copy + paste.
+     */
+    function onInputPaste() {
+        let input = id("in-typer");
+        let curVal = input.value;
+        input.value = "No copy + paste >:[";
+        input.disabled = true;
+        setTimeout(() => {
+            input.value = curVal;
+            input.disabled =  false;
+            input.focus();
+        }, 2000);
+    }
+
+    /**
+     * Once the game is over, fade out the game and fade in the done screen. Also shows the time
+     * the player took.
      */
     function onGameOver() {
         clearInterval(timer);
         hideElement("game");
-        setInterval(() => {
+        let timeStr = time.toString();
+        id("done-time").textContent = timeStr.substring(0, timeStr.indexOf(".") + 2) + " seconds";
+        setTimeout(() => {
             showElement("done");
+            showElement("btn-start");
         }, 1000);
     }
 
@@ -152,7 +186,8 @@
      */
     function updateTimer() {
         time += GAME_TIME_STEP;
-        id("time").textContent = time + " seconds";
+        let timeStr = time.toString();
+        id("time").textContent = timeStr.substring(0, timeStr.indexOf(".") + 2) + " seconds";
     }
 
     /**
