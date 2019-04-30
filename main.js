@@ -87,7 +87,7 @@
     function prepHeadlines(data) {
         // replace special quotes while mapping headlines
         allHeadlines = data.map(article => article.title
-            .replace(REGEX_QUOTE, "\"")
+            .replace(REGEX_QUOTE, "'")
             .replace(REGEX_DASH, "-"));
         let list = qs("#done ul");
         data.forEach(article => {
