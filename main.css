@@ -2,7 +2,9 @@
     Austin Jenchi
     CSE 154 AQ sp19
     04-29-2019
-    Styles for HeadlineTyper. Sets the background color, font family, and centers most elements and text.
+    Styles for HeadlineTyper. Sets the background color, font family, and centers most elements and
+    text. Also handles the animations for fading elements and hiding them, as well as the animations
+    that happen when the page is loaded.
 */
 @import url('https://fonts.googleapis.com/css?family=Gugi');
 
