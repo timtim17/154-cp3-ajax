@@ -11,6 +11,7 @@
 
     const API_NEWS_BASEURL = "https://newsapi.org/v2/top-headlines";
     const API_NEWS_KEY = "747970caa23a46378e493a792866e791";
+    const API_DOGS_BASEURL = "https://dog.ceo/api/breeds/image/random";
     /**
      * The country to fetch news for. Can be any country code supported by the News API.
      */
@@ -42,6 +43,18 @@
         input.addEventListener("input", onInputUpdate);
         input.addEventListener("paste", onInputPaste);
         fetchHeadlineData();
+        id("btn-motivate").addEventListener("click", function() {
+            // use function() {} anon notation so that this is correct
+            this.classList.add("hidden");
+            qsa(".decor-fire").forEach(fire => hideElement(fire));
+            let fireDogCopyright = qs("footer p:nth-child(3)");
+            fireDogCopyright.textContent = "Dog images from the ";
+            let dogLink = document.createElement("a");
+            dogLink.href = "https://dog.ceo/dog-api/";
+            dogLink.textContent = "Dog API";
+            fireDogCopyright.appendChild(dogLink);
+            motivation();
+        });
     }
 
     /**
@@ -196,6 +209,32 @@
     }
 
     /**
+     * Does some super secret motivation techniques with the Dogs API.
+     *
+     * Every so often, fetches a dog image from the API and animates it up the page.
+     */
+    function motivation() {
+        setTimeout(() => {
+            fetch(API_DOGS_BASEURL)
+                .then(checkStatus)
+                .then(JSON.parse)
+                .then(resp => resp.message)
+                .then(url => {
+                    let dogImg = document.createElement("img");
+                    dogImg.src = url;
+                    dogImg.alt = "A cute dog";
+                    dogImg.classList.add("dog");
+                    if (Math.random() < 0.5) {
+                        dogImg.classList.add("dog-right");
+                    }
+                    document.body.appendChild(dogImg);
+                    setTimeout(dogImg.remove, 10000);
+                });
+            motivation();
+        }, Math.max(5000, Math.random() * 10000));
+    }
+
+    /**
      * Helper to fade out an element. Adds a class to change the opacity to fade it out, then a
      * second later (animation time) add another to remove it from the page flow.
      *
@@ -267,5 +306,15 @@
         } else {
             return Promise.reject(new Error(response.status + ": " + response.statusText));
         }
+    }
+
+    /**
+     * Returns all the elements in the DOM that match the given selector.
+     *
+     * @param {string} selector - The selector to search with
+     * @returns {HTMLElement[]} All elements in the DOM that match that selector
+     */
+    function qsa(selector) {
+        return document.querySelectorAll(selector);
     }
 })();

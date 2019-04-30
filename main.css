@@ -25,7 +25,7 @@ header, main, section {
     transition: opacity 1s ease;
 }
 
-header, main, .hidden {
+header, main, .hidden, body button#btn-motivate.hidden { /* ultra specific selector to override style */
     opacity: 0;
 }
 
@@ -48,11 +48,11 @@ button {
     border-radius: 5px;
     font-weight: bold;
     height: 60px;
-    min-width: 330px;
     text-transform: uppercase;
     transition: box-shadow 250ms ease-in-out, background-color 500ms ease-in-out,
         border-color 500ms ease-in-out, opacity 1s ease;
     padding: 4px;
+    width: 330px;
 }
 
 button:enabled:hover, ul li:hover {
@@ -101,7 +101,7 @@ footer {
     width: 60%;
 }
 
-body.anim-load header, body.anim-load main {
+body.anim-load header, body.anim-load main, body.anim-load #btn-motivate {
     opacity: 1;
 }
 
@@ -117,15 +117,41 @@ body.anim-load .decor-fire {
     display: none;
 }
 
+.dog {
+    animation: dogUp 1 10s linear;
+    bottom: -200px;
+    position: fixed;
+    left: 0;
+    height: 200px;
+}
+
+@keyframes dogUp {
+    0% {
+        bottom: -200px;
+    }
+    100% {
+        bottom: 100vh;
+    }
+}
+
+.dog-right {
+    left: initial;
+    right: 0;
+}
+
 #prompt span {
     font-weight: bold;
 }
 
 .decor-fire {
     position: fixed;
-    transition: bottom 1s 1s ease-out;
-    bottom: -1000px;
+    transition: bottom 1s 1s ease-out, opacity 500ms ease;
     width: 300px;
+    z-index: 1;
+}
+
+.decor-fire, .decor-fire:last-of-type:hover {
+    bottom: -1000px;
 }
 
 .decor-fire:first-of-type {
@@ -140,4 +166,15 @@ body.anim-load .decor-fire {
     .decor-fire {
         display: none;
     }
+}
+
+#btn-motivate {
+    bottom: 120px;
+    opacity: 0;
+    position: absolute;
+    right: 35px;
+    transform: rotate(90deg);
+    transition-delay: 1s;
+    width: 200px;
+    z-index: -1;
 }
