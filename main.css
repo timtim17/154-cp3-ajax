@@ -1,0 +1,83 @@
+/*
+    Austin Jenchi
+    CSE 154 AQ sp19
+    04-29-2019
+    Styles for HeadlineTyper. Sets the background color, font family, and centers most elements and text.
+*/
+@import url('https://fonts.googleapis.com/css?family=Gugi');
+
+body {
+    background-color: #cccccc;
+    text-align: center;
+}
+
+body, button {
+    font-family: Gugi, cursive;
+}
+
+/* page load and fade in animations */
+header, main, section {
+    transition: opacity 1s ease;
+}
+
+header, main, .hidden {
+    opacity: 0;
+}
+
+header h2 {
+    font-style: italic;
+}
+
+button {
+    background: white;
+    border: solid 5px black;
+    border-radius: 5px;
+    font-weight: bold;
+    height: 60px;
+    min-width: 330px;
+    text-transform: uppercase;
+    transition: box-shadow 250ms ease-in-out, background-color 500ms ease-in-out,
+        border-color 500ms ease-in-out, opacity 1s ease;
+    padding: 4px;
+}
+
+button:enabled:hover {
+    box-shadow: 0 0 8px 0px black;
+}
+
+button:disabled {
+    border-color: #888888;
+    background-color: #999999;
+}
+
+a, footer {
+    color: white;
+}
+
+footer {
+    background: #333333;
+    border-radius: 16px 16px 0 0;
+    box-shadow: #737373 0 0 8px 4px;
+    bottom: -25%;   /* off screen */
+    left: calc(50vw - 60% / 2);
+    padding: 8px;
+    position: fixed;
+    transition: bottom 1s 500ms ease;
+    width: 60%;
+}
+
+body.anim-load header, body.anim-load main {
+    opacity: 1;
+}
+
+body.anim-load footer {
+    bottom: 0;
+}
+
+.hidden-none {
+    display: none;
+}
+
+#chars-typed {
+    font-weight: bold;
+}

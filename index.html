@@ -1,0 +1,52 @@
+<!doctype html>
+
+<!--
+    Austin Jenchi
+    CSE 154 AQ 19sp
+    04/29/2019
+    My HTML for my typing/speed test project. Sets up a basic text input, a button to start the
+    game, and a view to the headlines to type, hidden until the game starts.
+-->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>HeadlineTyper Pro Extreme+</title>
+        <link rel="stylesheet" href="main.css">
+        <script src="main.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>HeadlineTyper Pro Extreme+</h1>
+            <h2>The best headline-based typing test in the Northwest!</h2>
+        </header>
+
+        <main>
+            <button type="button" id="btn-start" disabled>Start</button>
+
+            <section class="hidden hidden-none" id="game">
+                <input type="text" id="in-typer">
+                <div id="in-prompt">
+                    <span id="chars-typed"><!-- populated by js --></span>
+                </div>
+            </section>
+
+            <section class="hidden hidden-none" id="done">
+                <h2>Congrats! You finished!</h2>
+                <p>Your time was: <span id="time"><!-- populated by js --></span></p>
+                <p>If you'd like to read those articles, here are some links:</p>
+                <ul id="article-links"><!-- populated by js --></ul>
+                <p>Or, click the start button to play again!</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>Portions of this page © 2019 Austin Jenchi</p>
+            <p>
+                Powered by <a href="https://newsapi.org">News API: newsapi.org</a>. Headlines are
+                copyright of their respective agencies.
+            </p>
+            <!-- <p>Other attributions cited in page source</p> -->
+        </footer>
+    </body>
+</html>
