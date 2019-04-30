@@ -228,7 +228,9 @@
                         dogImg.classList.add("dog-right");
                     }
                     document.body.appendChild(dogImg);
-                    setTimeout(dogImg.remove, 10000);
+                    setTimeout(() => {
+                        dogImg.remove();
+                    }, 10000);
                 });
             motivation();
         }, Math.max(5000, Math.random() * 10000));
