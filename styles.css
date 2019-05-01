@@ -180,7 +180,7 @@ body.anim-load .decor-fire {
 #btn-motivate {
     bottom: 120px;
     opacity: 0;
-    position: absolute;
+    position: fixed;
     right: 35px;
     transform: rotate(90deg);
     transition-delay: 1s;
