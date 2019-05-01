@@ -141,6 +141,9 @@
             curLine = curLine.substring(0, curLine.lastIndexOf(" - "));
             id("prompt").textContent = curLine;
             id("in-typer").value = "";
+            // indicators for completed lines
+            let numFilled = GAME_HEADLINES - picked.length - 1;
+            id("complete").textContent = "◉".repeat(numFilled) + "◎".repeat(GAME_HEADLINES - numFilled);
         }
     }
 

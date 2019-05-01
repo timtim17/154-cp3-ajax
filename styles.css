@@ -178,3 +178,8 @@ body.anim-load .decor-fire {
     width: 200px;
     z-index: -1;
 }
+
+#complete {
+    font-size: 4em;
+    margin: 0;
+}
