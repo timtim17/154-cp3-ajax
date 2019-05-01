@@ -143,7 +143,8 @@
             id("in-typer").value = "";
             // indicators for completed lines
             let numFilled = GAME_HEADLINES - picked.length - 1;
-            id("complete").textContent = "◉".repeat(numFilled) + "◎".repeat(GAME_HEADLINES - numFilled);
+            id("complete").textContent = "◉".repeat(numFilled) +
+                "◎".repeat(GAME_HEADLINES - numFilled);
         }
     }
 
