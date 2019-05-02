@@ -12,7 +12,7 @@ body {
     background-color: #cccccc;
 }
 
-body, input {
+body, #in-typer {
     text-align: center;
 }
 
@@ -38,23 +38,14 @@ header h2 {
     font-style: italic;
 }
 
-input, button {
+button, #in-typer {
     border: solid 5px black;
     border-radius: 5px;
 }
 
-input {
-    font-size: 1.5em;
-    height: 50px;
-    width: 100%;
-}
-
-input:focus {
-    border-color: red;
-}
-
 button {
     background: white;
+    display: inline;
     font-weight: bold;
     height: 60px;
     text-transform: uppercase;
@@ -175,6 +166,20 @@ body.anim-load .decor-fire {
     .decor-fire {
         display: none;
     }
+}
+
+#in-sound {
+    display: inline-block;
+}
+
+#in-typer {
+    font-size: 1.5em;
+    height: 50px;
+    width: 100%;
+}
+
+#in-typer:focus {
+    border-color: red;
 }
 
 #btn-motivate {

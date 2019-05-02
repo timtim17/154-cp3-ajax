@@ -22,7 +22,11 @@
         </header>
 
         <main>
-            <button type="button" id="btn-start" disabled>Start</button>
+            <section id="pregame">
+                <button type="button" id="btn-start" disabled>Start</button>
+                <h3>Options</h3>
+                <input type="checkbox" id="in-sound" checked><label for="in-sound">Sound On?</label>
+            </section>
 
             <section class="hidden hidden-none" id="game">
                 <p>Time: <span id="time"><!-- populated by js --></span></p>

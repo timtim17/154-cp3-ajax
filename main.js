@@ -23,12 +23,15 @@
     const DISPLAY_NONE_CLASS = "hidden-none";
     const REGEX_QUOTE = new RegExp("‘|’|“|”", "g");
     const REGEX_DASH = new RegExp("—|–", "g");
+    const MUSIC = "audio/music.mp3";
+    const AUDIO_FADE_RATE = 0.1;    // 10% every 100ms
 
     let allHeadlines = undefined;
     let picked = undefined; // headlines picked for the current game
     let timer = undefined;  // timer id
     let time = undefined;   // current time in seconds
     let curLine = undefined;
+    let audio = undefined;
 
     window.addEventListener("load", onPageLoad);
 
@@ -43,17 +46,15 @@
         input.addEventListener("input", onInputUpdate);
         input.addEventListener("paste", onInputPaste);
         fetchHeadlineData();
-        id("btn-motivate").addEventListener("click", function() {
-            // use function() {} anon notation so that this is correct
-            this.classList.add("hidden");
-            qsa(".decor-fire").forEach(fire => hideElement(fire));
-            let fireDogCopyright = qs("footer p:nth-child(3)");
-            fireDogCopyright.textContent = "Dog images from the ";
-            let dogLink = document.createElement("a");
-            dogLink.href = "https://dog.ceo/dog-api/";
-            dogLink.textContent = "Dog API";
-            fireDogCopyright.appendChild(dogLink);
-            motivation();
+        id("btn-motivate").addEventListener("click", onMotivateClick);
+        initAudio();
+        let soundCheck = id("in-sound");
+        soundCheck.addEventListener("change", () => {
+            if (soundCheck.checked) {
+                fadeAudio(1);
+            } else {
+                fadeAudio(0);
+            }
         });
     }
 
@@ -109,7 +110,7 @@
      * are loaded, so the AJAX call should have already happened.
      */
     function onGameStart() {
-        hideElement("btn-start");
+        hideElement("pregame");
         hideElement("done");
         picked = [];
         while (picked.length < GAME_HEADLINES) {
@@ -127,6 +128,9 @@
             showElement("game");
             id("in-typer").focus(); // put focus on the input so the user can start typing
         }, 1000);
+        if (audio.paused && id("in-sound").checked) {
+            audio.play();
+        }
     }
 
     /**
@@ -197,7 +201,7 @@
         id("done-time").textContent = timeStr.substring(0, timeStr.indexOf(".") + 2) + " seconds";
         setTimeout(() => {
             showElement("done");
-            showElement("btn-start");
+            showElement("pregame");
         }, 1000);
     }
 
@@ -210,6 +214,22 @@
         time += GAME_TIME_STEP;
         let timeStr = time.toString();
         id("time").textContent = timeStr.substring(0, timeStr.indexOf(".") + 2) + " seconds";
+    }
+
+    /**
+     * Runs when the motivate button is clicked. Starts the timer of dogs.
+     */
+    function onMotivateClick() {
+        // `this` is the motivate button
+        this.classList.add("hidden");
+        qsa(".decor-fire").forEach(fire => hideElement(fire));
+        let fireDogCopyright = qs("footer p:nth-child(3)");
+        fireDogCopyright.textContent = "Dog images from the ";
+        let dogLink = document.createElement("a");
+        dogLink.href = "https://dog.ceo/dog-api/";
+        dogLink.textContent = "Dog API";
+        fireDogCopyright.appendChild(dogLink);
+        motivation();
     }
 
     /**
@@ -235,7 +255,7 @@
                     setTimeout(() => {
                         dogImg.remove();
                     }, 10000);
-                });
+                }); // no catch -- this is an optional feature, i don't care if there's an error
             motivation();
         }, Math.max(5000, Math.random() * 10000));
     }
@@ -274,6 +294,36 @@
         setTimeout(() => {
             ele.classList.remove(HIDDEN_CLASS);
         }, 10);
+    }
+
+    /**
+     * Initialize the Audio and queue up the music, if the browser supports it.
+     */
+    function initAudio() {
+        if (Audio) {    // check for global audio
+            audio = new Audio(MUSIC);
+        } else {
+            audio = document.createElement("audio");
+            audio.src = MUSIC;
+        }
+        audio.loop = true;
+    }
+
+    /**
+     * Fades the audio volume to the given level. Assumes the audio is already playing.
+     *
+     * @param {number} newVolume - The new volume level to fade to, [0.0, 1.0]
+     */
+    function fadeAudio(newVolume) {
+        let interval = setInterval(() => {
+            if (audio.volume === newVolume) {
+                clearInterval(interval);
+            } else if (audio.volume < newVolume) {
+                audio.volume += Math.min(newVolume - audio.volume, AUDIO_FADE_RATE);
+            } else {
+                audio.volume += Math.max(-audio.volume - newVolume, -AUDIO_FADE_RATE);
+            }
+        }, 100);
     }
 
     /* CSE 154 HELPER FUNCTIONS */
