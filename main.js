@@ -95,7 +95,7 @@
             let listItem = document.createElement("li");
             let link = document.createElement("a");
             link.href = article.url;
-            link.textContent = article.title;
+            link.innerText = article.title;
             link.target = "_blank";
             listItem.appendChild(link);
             list.appendChild(listItem);
@@ -143,11 +143,11 @@
         } else {
             curLine = picked.pop();
             curLine = curLine.substring(0, curLine.lastIndexOf(" - "));
-            id("prompt").textContent = curLine;
+            id("prompt").innerText = curLine;
             id("in-typer").value = "";
             // indicators for completed lines
             let numFilled = GAME_HEADLINES - picked.length - 1;
-            id("complete").textContent = "◉".repeat(numFilled) +
+            id("complete").innerText = "◉".repeat(numFilled) +
                 "◎".repeat(GAME_HEADLINES - numFilled);
         }
     }
@@ -169,7 +169,7 @@
             nextHeadline();
         } else {
             let typedEle = document.createElement("span");
-            typedEle.textContent = curLine.substring(0, i);
+            typedEle.innerText = curLine.substring(0, i);
             parent.appendChild(typedEle);
             parent.append(document.createTextNode(curLine.substring(i)));
         }
@@ -198,7 +198,7 @@
         clearInterval(timer);
         hideElement("game");
         let timeStr = time.toString();
-        id("done-time").textContent = timeStr.substring(0, timeStr.indexOf(".") + 2) + " seconds";
+        id("done-time").innerText = timeStr.substring(0, timeStr.indexOf(".") + 2) + " seconds";
         setTimeout(() => {
             showElement("done");
             showElement("pregame");
@@ -213,7 +213,7 @@
     function updateTimer() {
         time += GAME_TIME_STEP;
         let timeStr = time.toString();
-        id("time").textContent = timeStr.substring(0, timeStr.indexOf(".") + 2) + " seconds";
+        id("time").innerText = timeStr.substring(0, timeStr.indexOf(".") + 2) + " seconds";
     }
 
     /**
@@ -224,10 +224,10 @@
         this.classList.add("hidden");
         qsa(".decor-fire").forEach(fire => hideElement(fire));
         let fireDogCopyright = qs("footer p:nth-child(3)");
-        fireDogCopyright.textContent = "Dog images from the ";
+        fireDogCopyright.innerText = "Dog images from the ";
         let dogLink = document.createElement("a");
         dogLink.href = "https://dog.ceo/dog-api/";
-        dogLink.textContent = "Dog API";
+        dogLink.innerText = "Dog API";
         fireDogCopyright.appendChild(dogLink);
         motivation();
     }
