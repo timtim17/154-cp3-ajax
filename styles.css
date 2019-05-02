@@ -73,7 +73,7 @@ ul {
     flex-wrap: wrap;
     justify-content: center;
     list-style: none;
-    margin-bottom: 150px;   /* room for footer */
+    margin-bottom: 200px;   /* room for footer */
 }
 
 ul li {
