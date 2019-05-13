@@ -1,0 +1,73 @@
+<!doctype html>
+
+<!--
+    Austin Jenchi
+    CSE 154 AQ 19sp
+    04/29/2019
+    My HTML for my typing/speed test project. Sets up a basic text input, a button to start the
+    game, and a view to the headlines to type, hidden until the game starts.
+-->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>HeadlineTyper Pro Extreme+</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="main.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>HeadlineTyper Pro Extreme+</h1>
+            <h2>The best headline-based typing test in the Northwest!</h2>
+        </header>
+
+        <main>
+            <section id="pregame">
+                <button type="button" id="btn-start" disabled>Start</button>
+                <h3>Options</h3>
+                <input type="checkbox" id="in-sound" checked><label for="in-sound">Sound On?</label>
+            </section>
+
+            <section class="hidden hidden-none" id="game">
+                <p>Time: <span id="time"><!-- populated by js --></span></p>
+                <p id="complete"><!-- populated by js --></p>
+                <input type="text" id="in-typer">
+                <div id="prompt"><!-- populated by js --></div>
+            </section>
+
+            <section class="hidden hidden-none" id="done">
+                <h2>Congrats! You finished!</h2>
+                <p>Your time was: <span id="done-time"><!-- populated by js --></span></p>
+                <p>Click the start button to play again!</p>
+                <p>If you'd like to read those articles, here are some links:</p>
+                <ul id="article-links"><!-- populated by js --></ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>Portions of this page © 2019 Austin Jenchi</p>
+            <p>
+                Powered by <a href="https://newsapi.org">News API: newsapi.org</a>. Headlines are
+                copyright of their respective agencies.
+            </p>
+            <p>Fire graphic by <a href="https://pixabay.com/vectors/afterburner-burn-reheater-fire-150135/">
+                OpenClipart-Vectors</a> on Pixabay under Pixabay License.</p>
+            <p>Music: "Delightful D" Kevin MacLeod
+                (<a href="https://incompetech.com">incompetech.com</a>)
+                Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY 3.0</a></p>
+        </footer>
+
+        <!--
+            pointless decorative fire graphics -- after all, this is the _best_ headline-based
+            typing test in the northwest
+
+            2 needed - left and right
+        -->
+        <img class="decor-fire" src="img/stupid-flame-for-no-reasonpng.png" alt="Decorative fire graphic">
+        <img class="decor-fire" src="img/stupid-flame-for-no-reasonpng.png" alt="Decorative fire
+        graphic">
+        <!-- TA Note: hovering over the right fire, assuming your viewport is large enough to show
+        it, will reveal this button -->
+        <button type="button" id="btn-motivate">Motivation</button>
+    </body>
+</html>

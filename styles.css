@@ -1,0 +1,199 @@
+/*
+    Austin Jenchi
+    CSE 154 AQ sp19
+    04-29-2019
+    Styles for HeadlineTyper. Sets the background color, font family, and centers most elements and
+    text. Also handles the animations for fading elements and hiding them, as well as the animations
+    that happen when the page is loaded.
+*/
+@import url('https://fonts.googleapis.com/css?family=Gugi');
+
+body {
+    background-color: #cccccc;
+}
+
+body, #in-typer {
+    text-align: center;
+}
+
+body, button {
+    font-family: Gugi, cursive;
+}
+
+/* page load and fade in animations */
+header, main, section {
+    transition: opacity 1s ease;
+}
+
+header, main, .hidden, body button#btn-motivate.hidden { /* ultra specific selector to override style */
+    opacity: 0;
+}
+
+section {
+    margin: 0 auto;
+    width: 70vw;
+}
+
+header h2 {
+    font-style: italic;
+}
+
+button, #in-typer {
+    border: solid 5px black;
+    border-radius: 5px;
+}
+
+button {
+    background: white;
+    display: inline;
+    font-weight: bold;
+    height: 60px;
+    text-transform: uppercase;
+    transition: box-shadow 250ms ease-in-out, background-color 500ms ease-in-out,
+        border-color 500ms ease-in-out, opacity 1s ease;
+    padding: 4px;
+    width: 330px;
+}
+
+button:enabled:hover, ul li:hover {
+    box-shadow: 0 0 8px 0px black;
+}
+
+button:disabled {
+    border-color: #888888;
+    background-color: #999999;
+}
+
+a, footer {
+    color: white;
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    margin-bottom: 200px;   /* room for footer */
+}
+
+ul li {
+    background: #aaaaaa;
+    border-radius: 25px;
+    margin: 4px;
+    padding: 8px;
+    transition: box-shadow 500ms ease;
+}
+
+ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+footer {
+    background: #333333;
+    border-radius: 16px 16px 0 0;
+    box-shadow: #737373 0 0 8px 4px;
+    bottom: -25%;   /* off screen */
+    left: calc(50vw - 60% / 2);
+    padding: 8px;
+    position: fixed;
+    transition: bottom 1s 500ms ease;
+    width: 60%;
+}
+
+body.anim-load header, body.anim-load main, body.anim-load #btn-motivate {
+    opacity: 1;
+}
+
+body.anim-load footer {
+    bottom: 0;
+}
+
+body.anim-load .decor-fire {
+    bottom: -10px;
+}
+
+.hidden-none {
+    display: none;
+}
+
+.dog {
+    animation: dogUp 1 10s linear;
+    bottom: -200px;
+    position: fixed;
+    left: 0;
+    height: 200px;
+}
+
+@keyframes dogUp {
+    0% {
+        bottom: -200px;
+    }
+    100% {
+        bottom: 100vh;
+    }
+}
+
+.dog-right {
+    left: initial;
+    right: 0;
+}
+
+#prompt span {
+    font-weight: bold;
+}
+
+.decor-fire {
+    position: fixed;
+    transition: bottom 1s 1s ease-out, opacity 500ms ease;
+    width: 300px;
+    z-index: 1;
+}
+
+.decor-fire, .decor-fire:last-of-type:hover {
+    bottom: -1000px;
+}
+
+.decor-fire:first-of-type {
+    left: -10px;
+}
+
+.decor-fire:last-of-type {
+    right: -20px;
+}
+
+@media (max-width: 1650px) {
+    .decor-fire {
+        display: none;
+    }
+}
+
+#in-sound {
+    display: inline-block;
+}
+
+#in-typer {
+    font-size: 1.5em;
+    height: 50px;
+    width: 100%;
+}
+
+#in-typer:focus {
+    border-color: red;
+}
+
+#btn-motivate {
+    bottom: 120px;
+    opacity: 0;
+    position: fixed;
+    right: 35px;
+    transform: rotate(90deg);
+    transition-delay: 1s;
+    width: 200px;
+    z-index: -1;
+}
+
+#complete {
+    font-size: 4em;
+    margin: 0;
+}
